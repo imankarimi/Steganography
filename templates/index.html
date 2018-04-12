@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Steganography</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for('.index') }}">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <form action="{{ url_for('embed') }}" method="POST" enctype="multipart/form-data">
+        <div class="container">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default btn-file cover">
+                                <span>Cover Image</span>
+                                <input type="file" name="cover" id="coverImgInp" accept="image/*" required>
+                            </span>
+                        </span>
+                        <input type="text" class="form-control" readonly>
+                    </div>
+                    <img id='cover-upload'/>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default btn-file secret">
+                                <span>Secret Image</span>
+                                <input type="file" name="secret" id="secretImgInp" required>
+                            </span>
+                        </span>
+                        <input type="text" class="form-control" readonly>
+                    </div>
+                    <img id='secret-upload'/>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default">
+                                <span>Plane</span>
+                                <select name="plane" required>
+                                  <option value="0" selected>Red</option>
+                                  <option value="1">Green</option>
+                                  <option value="2">Blue</option>
+                                </select>
+                            </span>
+                        </span>
+                    </div>
+                    <img id='secret-upload'/>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default">
+                                <span>Bit</span>
+                                <input type="number" name="bit" min="0" max="7" required>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-lg btn-primary" id="upload-button" type="submit">Send</button>
+        </div>
+    </form>
+
+    {% if response is defined %}
+        <div class="container mt40">
+            <section class="row">
+                {% if response['cover'] is defined %}
+                    <article class="col-xs-12 col-sm-6 col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <a href="{{ response['cover'] }}" class="zoom" data-type="image" target="_blank">
+                                    <img src="{{ response['cover'] }}" alt="Cover Portfolio" />
+                                    <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+                                </a>
+                            </div>
+                            <div class="panel-footer"><h4>Cover</h4></div>
+                        </div>
+                    </article>
+                {% endif %}
+
+                {% if response['secret'] is defined %}
+                    <article class="col-xs-12 col-sm-6 col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <a href="{{ response['secret'] }}" class="zoom" data-type="image" target="_blank">
+                                    <img src="{{ response['secret'] }}" alt="People Portfolio" />
+                                    <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+                                </a>
+                            </div>
+                            <div class="panel-footer"><h4>Secret</h4></div>
+                        </div>
+                    </article>
+                {% endif %}
+
+                {% if response['encode'] is defined %}
+                    <article class="col-xs-12 col-sm-6 col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <a href="{{ response['encode'] }}" class="zoom" data-type="image" target="_blank">
+                                    <img src="{{ response['encode'] }}" alt="Sports Portfolio" />
+                                    <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+                                </a>
+                            </div>
+                            <div class="panel-footer"><h4>Encode</h4></div>
+                        </div>
+                    </article>
+                {% endif %}
+
+                {% if response['decode'] is defined %}
+                    <article class="col-xs-12 col-sm-6 col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <a href="{{ response['decode'] }}" class="zoom" data-type="image" target="_blank">
+                                    <img src="{{ response['decode'] }}" alt="Food Portfolio" />
+                                    <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+                                </a>
+                            </div>
+                            <div class="panel-footer"><h4>Decode</h4></div>
+                        </div>
+                    </article>
+                {% endif %}
+            </section>
+        </div>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
