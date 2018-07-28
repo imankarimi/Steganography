@@ -13,3 +13,5 @@ This project is written with Python. To use, you can run the following commands 
 > vertualenv venv
 
 > pip install -r requirements.txt
+
+> python steganography.py
