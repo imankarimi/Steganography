@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, redirect, url_for, flash
+from flask import Flask, jsonify, render_template
 from app.views import *
 
 app = Flask(__name__)
@@ -18,6 +18,23 @@ def embed():
 @app.route('/api/v1/embed')
 def embed_service():
     result = steganography()
+    return jsonify(result)
+
+
+@app.route('/stegano/')
+def stegano():
+    return render_template('stegano.html')
+
+
+@app.route('/api/v1/stegano/encode/', methods=['POST'])
+def stegano_encode():
+    result = steganoencode()
+    return jsonify(result)
+
+
+@app.route('/api/v1/stegano/decode/', methods=['POST'])
+def stegano_decode():
+    result = steganodecode()
     return jsonify(result)
 
 
