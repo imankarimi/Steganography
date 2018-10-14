@@ -61,7 +61,7 @@ def steganoencode():
     cover.save(cover_image)
 
     steg = LSB(img_path=cover_image, _src='')
-    if 'message' in request.form:
+    if 'message' in request.form and request.form['message']:
         _encode_img = steg.encode_msg(msg=request.form['message'])
     elif 'secret' in request.files:
         _secret = request.files['secret']
