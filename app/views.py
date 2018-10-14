@@ -2,8 +2,8 @@ import os
 import time
 import cv2
 from flask import request
-from app.providers.stegano import LSB
-from app.providers.Steganography import *
+from app.Providers.stegano import LSB
+from app.Providers.Steganography import MSB
 
 STATIC = 'static/images/'
 LINK = '../{}'.format(STATIC)
