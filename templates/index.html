@@ -2,152 +2,104 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Steganography</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
+
+    <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url_for('.index') }}">
-                    <span class="glyphicon glyphicon-refresh"></span>
-                </a>
+            <div class="navbar-header"><a class="navbar-brand" href="#">Steganography</a></div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">encode</a></li>
+                    <li><a href="#">decode</a></li>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <form action="{{ url_for('embed') }}" method="POST" enctype="multipart/form-data">
-        <div class="container">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <span class="btn btn-default btn-file cover">
-                                <span>Cover Image</span>
-                                <input type="file" name="cover" id="coverImgInp" accept="image/*" required>
+    <!-- content -->
+    <div class="container-fluid">
+        <div class="row">
+            <form id="stegano_encode" action="{{ url_for('stegano_encode') }}" method="POST" enctype="multipart/form-data">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Cover Image</label>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <span class="btn btn-default btn-file cover">
+                                    Browse… <input type="file" name="cover" id="coverImgInp" accept="image/*" required>
+                                </span>
                             </span>
-                        </span>
-                        <input type="text" class="form-control" readonly>
-                    </div>
-                    <img id='cover-upload'/>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <span class="btn btn-default btn-file secret">
-                                <span>Secret Image</span>
-                                <input type="file" name="secret" id="secretImgInp" required>
-                            </span>
-                        </span>
-                        <input type="text" class="form-control" readonly>
-                    </div>
-                    <img id='secret-upload'/>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <span class="btn btn-default">
-                                <span>Plane</span>
-                                <select name="plane" required>
-                                  <option value="0" selected>Red</option>
-                                  <option value="1">Green</option>
-                                  <option value="2">Blue</option>
-                                </select>
-                            </span>
-                        </span>
-                    </div>
-                    <img id='secret-upload'/>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <span class="btn btn-default">
-                                <span>Bit</span>
-                                <input type="number" name="bit" min="0" max="7" required>
-                            </span>
-                        </span>
+                            <input type="text" class="form-control" readonly>
+                        </div>
+                        <img id='cover-upload'/>
                     </div>
                 </div>
-            </div>
-            <button class="btn btn-lg btn-primary" id="upload-button" type="submit">Send</button>
+
+                <div class="col-md-5">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Message</a></li>
+                        <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Image</a></li>
+                    </ul>
+
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label for="message"><span>Secret Message:</span></label>
+                                    <textarea name="message" id="message" cols="80" rows="10"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="form-group">
+                                <label>Cover Image</label>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-default btn-file secret">
+                                            Browse… <input type="file" name="secret" id="secretImgInp" accept="image/*">
+                                        </span>
+                                    </span>
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                                <img id='secret-upload'/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-outline-success" type="submit">Encode</button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
+    <!-- end content -->
 
-    {% if response is defined %}
-        <div class="container mt40">
-            <section class="row">
-                {% if response['cover'] is defined %}
-                    <article class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <a href="{{ response['cover'] }}" class="zoom" data-type="image" target="_blank">
-                                    <img src="{{ response['cover'] }}" alt="Cover Portfolio" />
-                                    <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
-                                </a>
-                            </div>
-                            <div class="panel-footer"><h4>Cover</h4></div>
-                        </div>
-                    </article>
-                {% endif %}
+    <button type="button" id="show_image" style="visibility: hidden;" class="btn btn-primary" data-toggle="modal" data-target="#encode_model">Launch demo modal</button>
 
-                {% if response['secret'] is defined %}
-                    <article class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <a href="{{ response['secret'] }}" class="zoom" data-type="image" target="_blank">
-                                    <img src="{{ response['secret'] }}" alt="People Portfolio" />
-                                    <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
-                                </a>
-                            </div>
-                            <div class="panel-footer"><h4>Secret</h4></div>
-                        </div>
-                    </article>
-                {% endif %}
-
-                {% if response['encode'] is defined %}
-                    <article class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <a href="{{ response['encode'] }}" class="zoom" data-type="image" target="_blank">
-                                    <img src="{{ response['encode'] }}" alt="Sports Portfolio" />
-                                    <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
-                                </a>
-                            </div>
-                            <div class="panel-footer"><h4>Encode</h4></div>
-                        </div>
-                    </article>
-                {% endif %}
-
-                {% if response['decode'] is defined %}
-                    <article class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <a href="{{ response['decode'] }}" class="zoom" data-type="image" target="_blank">
-                                    <img src="{{ response['decode'] }}" alt="Food Portfolio" />
-                                    <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
-                                </a>
-                            </div>
-                            <div class="panel-footer"><h4>Decode</h4></div>
-                        </div>
-                    </article>
-                {% endif %}
-            </section>
+    <!-- Modal -->
+    <div class="modal fade panel-primary" id="encode_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary">Download image</a>
+                </div>
+            </div>
         </div>
-    {% endif %}
+    </div>
 
     <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

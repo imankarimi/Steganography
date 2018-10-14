@@ -9,23 +9,6 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/embed', methods=['POST'])
-def embed():
-    result = steganography()
-    return render_template('index.html', response=result)
-
-
-@app.route('/api/v1/embed')
-def embed_service():
-    result = steganography()
-    return jsonify(result)
-
-
-@app.route('/stegano/')
-def stegano():
-    return render_template('stegano.html')
-
-
 @app.route('/api/v1/stegano/encode/', methods=['POST'])
 def stegano_encode():
     result = steganoencode()
