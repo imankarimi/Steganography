@@ -14,12 +14,19 @@ $(document).ready( function() {
             contentType: false,
             processData: false,
             success: function(data){
-                console.log("success");
-                console.log(data);
+                if(data['valid'] === true){
+                    console.log("success");
+                    var body = '<img src="/'+data['encode_image']+'" width="100%">';
+                    $('#encode_model').find('.modal-body').append(body);
+                    $('#encode_model').find('.modal-footer').find('a').attr('href', "/"+data['encode_image']);
+                    $('#encode_model').find('.modal-footer').find('a').attr('download', data['name']);
+                    $('#show_image').click();
+                }else{
+                    console.log("error");
+                }
             },
-            error: function(data){
+            error: function(){
                 console.log("error");
-                console.log(data);
             }
         });
     }));
