@@ -6,8 +6,7 @@ from bidi.algorithm import get_display
 
 class LSB:
 
-    def __init__(self, _src, img_path):
-        self.src = _src
+    def __init__(self, img_path):
         self.image = cv2.imread(img_path)
         self.height, self.width, self.channels = self.image.shape
         self.size = self.width * self.height

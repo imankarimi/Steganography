@@ -1,5 +1,5 @@
 import cv2 as cv
-from app.Providers.stegano import LSB
+from service.Providers.stegano import LSB
 
 # encode_lsb = LSB(image_path='static/images/cover.jpg')
 # img_encoded = encode_lsb.encode_message(message="سلام استاد تست این عکس اوکی بود بهم پیام بدین لطفا. با تشکر")

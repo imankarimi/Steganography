@@ -15,14 +15,29 @@ $(document).ready( function() {
             processData: false,
             success: function(data){
                 if(data['valid'] === true){
-                    console.log("success");
-                    var body = '<img src="/'+data['encode_image']+'" width="100%">';
-                    $('#encode_model').find('.modal-body').append(body);
-                    $('#encode_model').find('.modal-footer').find('a').attr('href', "/"+data['encode_image']);
-                    $('#encode_model').find('.modal-footer').find('a').attr('download', data['name']);
-                    $('#show_image').click();
+                    if(data['type'] === 'encode'){
+                        var body = '<img src="/'+data['encode_image']+'" width="100%">';
+                        $('#encode_model').find('.modal-body').append(body);
+                        $('#encode_model').find('.modal-footer').find('a').attr('href', "/"+data['encode_image']);
+                        $('#encode_model').find('.modal-footer').find('a').attr('download', data['name']);
+                        $('#show_image').click();
+                    }else{
+                        if(data['message']){
+                            var body = '<center><p>'+ data['message'] +'</p></center>';
+                            $('#encode_model').find('.modal-body').html(body);
+                            $('#encode_model').find('.modal-footer').find('a').hide();
+                            $('#show_image').click();
+                        }else{
+                            var body = '<img src="/'+data['decode_img']+'" width="100%">';
+                            $('#encode_model').find('.modal-body').append(body);
+                            $('#encode_model').find('.modal-footer').find('a').show();
+                            $('#encode_model').find('.modal-footer').find('a').attr('href', "/"+data['decode_img']);
+                            $('#encode_model').find('.modal-footer').find('a').attr('download', data['name']);
+                            $('#show_image').click();
+                        }
+                    }
                 }else{
-                    console.log("error");
+                    console.log(data['message']);
                 }
             },
             error: function(){

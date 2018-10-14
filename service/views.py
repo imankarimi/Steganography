@@ -61,7 +61,7 @@ def steganoencode():
     cover_image = os.path.join(PATH, 'cover_%s.jpg' % str(_unique_name))
     cover.save(cover_image)
 
-    steg = LSB(img_path=cover_image, _src='')
+    steg = LSB(img_path=cover_image)
     try:
         if 'message' in request.form and request.form['message']:
             _encode_img = steg.encode_msg(msg=request.form['message'])
@@ -71,15 +71,27 @@ def steganoencode():
             _secret.save(_secret_image)
             _encode_img = steg.encode_image(img_path=_secret_image)
         else:
-            return {'valid': False, 'message': 'field required'}
+            return {'valid': False, 'type': 'encode', 'message': 'field required'}
     except Exception as e:
-        return {'valid': False, 'message': str(e)}
+        return {'valid': False, 'type': 'encode', 'message': str(e)}
 
     image = 'static/images/encode_%s.png' % str(_unique_name)
     cv2.imwrite(image, _encode_img)
-    result = {'valid': True, 'encode_image': image, 'name': 'encode_%s.png' % str(_unique_name)}
+    result = {'valid': True, 'type': 'encode', 'encode_image': image, 'name': 'encode_%s.png' % str(_unique_name)}
     return result
 
 
 def steganodecode():
-    return ['decode']
+    _unique_name = int(round(time.time() * 1000))
+    cover = request.files['cover']
+    cover_image = os.path.join(PATH, 'encode_%s.png' % str(_unique_name))
+    cover.save(cover_image)
+    steg = LSB(img_path=cover_image)
+    if request.form['decode'] == '0':
+        decode_msg = steg.decode_msg()
+        return {'valid': True, 'type': 'decode', 'message': decode_msg}
+    else:
+        decode_img = steg.decode_image()
+        image = 'static/images/decode_%s.png' % str(_unique_name)
+        cv2.imwrite(image, decode_img)
+        return {'valid': True, 'type': 'decode', 'decode_img': image, 'name': 'decode_%s.png' % str(_unique_name)}

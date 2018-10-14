@@ -6,7 +6,17 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html')
+    return render_template('index.html', welcome=True)
+
+
+@app.route('/stegano/encode/', methods=['GET'])
+def encode():
+    return render_template('index.html', encode=True)
+
+
+@app.route('/stegano/decode/', methods=['GET'])
+def decode():
+    return render_template('index.html', decode=True)
 
 
 @app.route('/api/v1/stegano/encode/', methods=['POST'])
