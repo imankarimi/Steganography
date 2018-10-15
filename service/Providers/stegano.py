@@ -71,8 +71,9 @@ class LSB:
             tmp = self.get_bits(bit_size=16)
             _msg += chr(int(tmp, 2))
             i += 1
-        reshaped_text = arabic_reshaper.reshape(_msg)
-        decode_msg = get_display(reshaped_text)
+        decode_msg = _msg
+        # reshaped_text = arabic_reshaper.reshape(_msg)
+        # decode_msg = get_display(reshaped_text)
         return decode_msg
 
     def decode_image(self):
