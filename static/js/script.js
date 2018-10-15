@@ -4,6 +4,7 @@ $(document).ready( function() {
 
     $('#stegano_encode').on('submit', (function (e) {
         e.preventDefault();
+        $('#loader-background').show();
         var formData = new FormData(this);
 
         $.ajax({
@@ -14,6 +15,7 @@ $(document).ready( function() {
             contentType: false,
             processData: false,
             success: function(data){
+                $('#loader-background').hide();
                 if(data['valid'] === true){
                     if(data['type'] === 'encode'){
                         var body = '<img src="/'+data['encode_image']+'" width="100%">';
@@ -37,6 +39,7 @@ $(document).ready( function() {
                         }
                     }
                 }else{
+                    $('#loader-background').hide();
                     console.log(data['message']);
                 }
             },
