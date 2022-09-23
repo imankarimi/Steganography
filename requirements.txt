@@ -30,7 +30,7 @@ olefile==0.45.1
 opencv-python==3.4.0.12
 pexpect==4.2.1
 Pillow==5.0.0
-protobuf==3.0.0
+protobuf==3.18.3
 pycrypto==2.6.1
 pymacaroons==0.13.0
 PyNaCl==1.1.2
